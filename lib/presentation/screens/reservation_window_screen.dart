@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:keda/presentation/providers/reservation_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
-class ReservationTimeScreen extends StatelessWidget {
-  const ReservationTimeScreen({super.key});
+class ReservationWindowScreen extends StatelessWidget {
+  const ReservationWindowScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final reservation = context.watch<ReservationProvider>();
     final String minutos = reservation.minutesReservation.toString();
+    final fechaActual = DateTime.now();
+    final List<DateTime> ventanasHorarias = [];
 
-    final List<double> ventanasHorarias = [15, 30, 45, 60];
-
+    for (int i = 0; i < 24; i++) {
+      // Crear un nuevo DateTime con la hora actual y la hora iterada
+      DateTime hora = DateTime(
+        fechaActual.year,
+        fechaActual.month,
+        fechaActual.day,
+        i,
+      );
+      // Agregar la hora a la lista
+      ventanasHorarias.add(hora);
+    }
     return Material(
       child: SafeArea(
         minimum: const EdgeInsets.all(20),
@@ -24,14 +35,15 @@ class ReservationTimeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                    'Aliqua nostrud dolore sint tempor excepteur irure qui velit in tempor. Tiempo reservado $minutos'),
+                Text('Fecha de reservacion $fechaActual $minutos'),
               ],
             ),
             const SizedBox(
               height: 40,
             ),
-            Expanded(
+            Container(
+              height: 500,
+              width: double.infinity,
               child: ListView.separated(
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 10,
@@ -43,18 +55,14 @@ class ReservationTimeScreen extends StatelessWidget {
                     tileColor: Colors.deepOrangeAccent,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    onTap: () {
-                      reservation.actualizarDatos(
-                          minutesReservation: ventanasHorarias[index]);
-                      context.push('/date');
-                    },
+                    onTap: () {},
                     title: Center(
                         child: Text(
-                            "Reservar ${ventanasHorarias[index].toString()} minutos")),
+                            " ${DateFormat.Hm().format(ventanasHorarias[index])}")),
                   );
                 },
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:keda/presentation/providers/reservation_provider.dart';
+import 'package:provider/provider.dart';
+
+class ReservationDateScreen extends StatefulWidget {
+  @override
+  State<ReservationDateScreen> createState() => _ReservationDateScreenState();
+}
+
+class _ReservationDateScreenState extends State<ReservationDateScreen> {
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime _selectedDay = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    final reservation = context.watch<ReservationProvider>();
+    final String minutos = reservation.minutesReservation.toString();
+
+    return Material(
+      child: SafeArea(
+        minimum: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Column(
+              children: [
+                const Text('Nombre de usuario'),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('Tiempo reservado $minutos minutos el $_selectedDay'),
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            // Agrega el calendario aquí
+            TableCalendar(
+              calendarFormat: _calendarFormat,
+              focusedDay: _focusedDay,
+              firstDay: DateTime(2022, 1, 1),
+              lastDay: DateTime(2024, 12, 31),
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                });
+                context.push('/window');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

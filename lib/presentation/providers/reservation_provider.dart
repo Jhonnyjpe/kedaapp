@@ -9,11 +9,14 @@ class ReservationProvider extends ChangeNotifier {
   DateTime get dayReservation => _dayReservation;
   DateTime get initialReservation => _initialReservation;
 
-  void actualizarDatos(double minutesReservation, DateTime dayReservation,
-      DateTime initialReservation) {
-    _minutesReservation = minutesReservation;
-    _dayReservation = dayReservation;
-    _initialReservation = initialReservation;
+  void actualizarDatos({
+    double? minutesReservation,
+    DateTime? dayReservation,
+    DateTime? initialReservation,
+  }) {
+    _minutesReservation = minutesReservation ?? _minutesReservation;
+    _dayReservation = dayReservation ?? _dayReservation;
+    _initialReservation = initialReservation ?? _initialReservation;
 
     notifyListeners();
   }
