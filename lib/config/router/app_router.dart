@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:keda/presentation/screens/form_screen.dart';
 import 'package:keda/presentation/screens/screens.dart';
 
 // GoRouter configuration
@@ -7,7 +8,7 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => ReservationTimeScreen(),
+      builder: (context, state) => ReservationWindowScreen(),
     ),
     GoRoute(
       path: '/date',
@@ -16,6 +17,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/window',
       builder: (context, state) => ReservationWindowScreen(),
+    ),
+    GoRoute(
+      path: '/forms',
+      builder: (context, state) => FormScreen(),
     ),
   ],
 );

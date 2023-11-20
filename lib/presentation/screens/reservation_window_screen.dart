@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keda/presentation/providers/reservation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +27,7 @@ class ReservationWindowScreen extends StatelessWidget {
     }
     return Material(
       child: SafeArea(
-        minimum: const EdgeInsets.all(20),
+        minimum: EdgeInsets.all(20),
         child: Column(
           children: [
             Column(
@@ -35,31 +36,35 @@ class ReservationWindowScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Text('Fecha de reservacion $fechaActual $minutos'),
+                Text(
+                    'Aliqua nostrud dolore sint tempor excepteur irure qui velit in tempor. Tiempo reservado $minutos'),
               ],
             ),
             const SizedBox(
               height: 40,
             ),
-            Container(
-              height: 500,
-              width: double.infinity,
+            Expanded(
               child: ListView.separated(
+                shrinkWrap: true,
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 10,
                 ),
                 itemCount: ventanasHorarias.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    trailing: const Icon(Icons.arrow_right),
-                    tileColor: Colors.deepOrangeAccent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    onTap: () {},
-                    title: Center(
-                        child: Text(
-                            " ${DateFormat.Hm().format(ventanasHorarias[index])}")),
-                  );
+                  return TextButton(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          )),
+                          backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.amber)),
+                      onPressed: () {
+                        context.push('/forms');
+                      },
+                      child: Text(
+                          " ${DateFormat.Hm().format(ventanasHorarias[index])}"));
                 },
               ),
             )
