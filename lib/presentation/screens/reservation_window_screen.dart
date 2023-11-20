@@ -37,35 +37,40 @@ class ReservationWindowScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                    'Aliqua nostrud dolore sint tempor excepteur irure qui velit in tempor. Tiempo reservado $minutos'),
+                    'Reservar $minutos minutos el ${reservation.dayReservation} '),
               ],
             ),
             const SizedBox(
               height: 40,
             ),
-            Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 10,
+            Flexible(
+              child: Container(
+                width: 300,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
+                  itemCount: ventanasHorarias.length,
+                  itemBuilder: (context, index) {
+                    return TextButton(
+                        style: ButtonStyle(
+                            splashFactory: NoSplash.splashFactory,
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            )),
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.purpleAccent)),
+                        onPressed: () {
+                          context.push(
+                            '/forms',
+                          );
+                        },
+                        child: Text(
+                            " ${DateFormat.Hm().format(ventanasHorarias[index])}"));
+                  },
                 ),
-                itemCount: ventanasHorarias.length,
-                itemBuilder: (context, index) {
-                  return TextButton(
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          )),
-                          backgroundColor: MaterialStateColor.resolveWith(
-                              (states) => Colors.amber)),
-                      onPressed: () {
-                        context.push('/forms');
-                      },
-                      child: Text(
-                          " ${DateFormat.Hm().format(ventanasHorarias[index])}"));
-                },
               ),
             )
           ],

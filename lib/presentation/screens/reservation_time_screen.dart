@@ -24,8 +24,7 @@ class ReservationTimeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                    'Aliqua nostrud dolore sint tempor excepteur irure qui velit in tempor. Tiempo reservado $minutos'),
+                Text('Reservado el ${reservation.dayReservation.toString()}'),
               ],
             ),
             const SizedBox(

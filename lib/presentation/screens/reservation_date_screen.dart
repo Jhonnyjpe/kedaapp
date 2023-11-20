@@ -5,6 +5,8 @@ import 'package:keda/presentation/providers/reservation_provider.dart';
 import 'package:provider/provider.dart';
 
 class ReservationDateScreen extends StatefulWidget {
+  const ReservationDateScreen({super.key});
+
   @override
   State<ReservationDateScreen> createState() => _ReservationDateScreenState();
 }
@@ -49,7 +51,9 @@ class _ReservationDateScreenState extends State<ReservationDateScreen> {
                 setState(() {
                   _selectedDay = selectedDay;
                   _focusedDay = focusedDay;
+                  reservation.actualizarDatos(dayReservation: selectedDay);
                 });
+
                 context.push('/window');
               },
             ),
