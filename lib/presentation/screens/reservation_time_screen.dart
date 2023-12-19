@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keda/presentation/providers/reservation_provider.dart';
+import 'package:keda/presentation/widgets/custom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class ReservationTimeScreen extends StatelessWidget {
@@ -9,15 +10,17 @@ class ReservationTimeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final reservation = context.watch<ReservationProvider>();
-    final String minutos = reservation.minutesReservation.toString();
 
-    final List<double> ventanasHorarias = [15, 30, 45, 60];
+    final List<double> ventanasHorarias = [10, 15, 30, 45, 60];
 
     return Material(
-      child: SafeArea(
-        minimum: const EdgeInsets.all(20),
+      child: Container(
+        height: 800,
+        width: 800,
+        color: Colors.blueAccent,
         child: Column(
           children: [
+            Icon(Icons.access_alarm_outlined),
             Column(
               children: [
                 const Text('Nombre de usuario'),
@@ -31,27 +34,19 @@ class ReservationTimeScreen extends StatelessWidget {
               height: 40,
             ),
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 10,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...ventanasHorarias.map((e) => CustomButton(
+                          texto: e.toString(),
+                          customTab: () {
+                            reservation.actualizarDatos(
+                                minutesReservation: e.toDouble());
+                            context.push('/date');
+                          },
+                        ))
+                  ],
                 ),
-                itemCount: ventanasHorarias.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    trailing: const Icon(Icons.arrow_right),
-                    tileColor: Colors.deepOrangeAccent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    onTap: () {
-                      reservation.actualizarDatos(
-                          minutesReservation: ventanasHorarias[index]);
-                      context.push('/date');
-                    },
-                    title: Center(
-                        child: Text(
-                            "Reservar ${ventanasHorarias[index].toString()} minutos")),
-                  );
-                },
               ),
             ),
           ],

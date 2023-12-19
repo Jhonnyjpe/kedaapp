@@ -32,7 +32,7 @@ final appRouter = GoRouter(
       pageBuilder: (context, state) {
         return CustomSlideTransition(
           key: state.pageKey,
-          child: ReservationDateScreen(),
+          child: ReservationTimeScreen(),
         );
       },
     ),

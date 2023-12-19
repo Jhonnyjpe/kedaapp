@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keda/presentation/providers/reservation_provider.dart';
+import 'package:keda/presentation/widgets/custom_buttons.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -43,36 +44,22 @@ class ReservationWindowScreen extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            Flexible(
-              child: Container(
-                width: 300,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-                  itemCount: ventanasHorarias.length,
-                  itemBuilder: (context, index) {
-                    return TextButton(
-                        style: ButtonStyle(
-                            splashFactory: NoSplash.splashFactory,
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            )),
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (states) => Colors.purpleAccent)),
-                        onPressed: () {
-                          context.push(
-                            '/forms',
-                          );
-                        },
-                        child: Text(
-                            " ${DateFormat.Hm().format(ventanasHorarias[index])}"));
-                  },
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...ventanasHorarias.map((e) => CustomButton(
+                          texto: " ${DateFormat.Hm().format(e)}",
+                          customTab: () {
+                            context.push(
+                              '/forms',
+                            );
+                          },
+                        ))
+                  ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
