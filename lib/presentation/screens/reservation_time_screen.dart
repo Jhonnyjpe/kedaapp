@@ -13,15 +13,14 @@ class ReservationTimeScreen extends StatelessWidget {
 
     final List<double> ventanasHorarias = [10, 15, 30, 45, 60];
 
-    return Material(
-      child: Container(
-        height: 800,
-        width: 800,
-        color: Colors.blueAccent,
-        child: Column(
+    return Container(
+      width: 600,
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Column(
           children: [
-            Icon(Icons.access_alarm_outlined),
-            Column(
+            Flex(
+              direction: Axis.vertical,
               children: [
                 const Text('Nombre de usuario'),
                 const SizedBox(
