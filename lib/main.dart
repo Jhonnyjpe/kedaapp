@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keda/config/router/app_router.dart';
+import 'package:keda/config/theme/app_theme.dart';
 import 'package:keda/presentation/providers/reservation_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +20,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-        ),
+        theme: AppTheme().getAppTheme(),
         title: 'Material App',
       ),
     );
